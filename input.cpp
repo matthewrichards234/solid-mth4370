@@ -1,15 +1,22 @@
 #include <iostream>
 
-class Keyboard {
+// Interface for input devices
+class IInputDevice {
 public:
-    std::string getInput() {
+    virtual std::string getInput() = 0;
+    virtual ~IInputDevice() = default;
+};
+
+class Keyboard : public IInputDevice {
+public:
+    std::string getInput() override {
         return "User input from keyboard";
     }
 };
 
-class Mouse {
+class Mouse : public IInputDevice {
 public:
-    std::string getInput() {
+    std::string getInput() override {
         return "User input from mouse";
     }
 };
@@ -21,15 +28,17 @@ public:
 // with one device.
 class InputProcessor {
 public:
+  IInputDevice& device;
+public:
     void processInput() {
-        Keyboard keyboard;
-        std::string input = keyboard.getInput();
+        device device;
+        std::string input = device.getInput();
         std::cout << "Processing: " << input;
     }
 };
 
 // For demonstration
 int main() {
-    InputProcessor processor;
-    processor.processInput();
+    Keyboard keyboard;
+    Mouse mouse;
 }
